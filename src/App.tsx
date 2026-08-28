@@ -495,6 +495,12 @@ export default function App() {
         onInjectionSuccess={(scenario) => {
           setIsSimulatorOpen(false);
           setCurrentTab('dashboard');
+          loadAllData();
+          setToastNotification({
+            title: '🚨 Hydraulic Leak Injected & Detected',
+            message: 'Real-time Z-score anomaly calculated. Maintenance work order automatically prioritized.',
+            type: 'alert'
+          });
         }}
       />
     </div>

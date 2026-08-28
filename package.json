@@ -1,13 +1,16 @@
 {
-  "name": "react-example",
+  "name": "aquawatch-water-dashboard",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
+  "description": "AquaWatch - Urban Water Leakage & Loss Detection Intelligence System with GIS mapping, rolling Z-score anomaly detection, and maintenance dispatch queue.",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
+    "dev:client": "vite",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "build:client": "vite build",
+    "preview": "vite preview",
     "start": "node dist/server.cjs",
-    "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,13 +33,12 @@
     "ws": "^8.21.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.3",
-    "@types/express": "^4.17.21"
+    "typescript": "~5.8.2"
   }
 }
