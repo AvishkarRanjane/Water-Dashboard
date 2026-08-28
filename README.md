@@ -2,20 +2,21 @@
 
 <div align="center">
 
+[![Live Demo](https://img.shields.io/badge/🟢_LIVE_DEMO-water--dashboard.vercel.app-00DC82?style=for-the-badge&logo=vercel&logoColor=white)](https://water-dashboard.vercel.app)
 [![React 19](https://img.shields.io/badge/React-19.0.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.1-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-6.2.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Leaflet GIS](https://img.shields.io/badge/Leaflet-1.9.4-199900?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com/)
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Ready-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
-[![Compliance](https://img.shields.io/badge/Standards-ISO_24516--1_%7C_EPA_WaterSense-0284c7?style=for-the-badge)](https://www.epa.gov/watersense)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 <br />
 
+### 🌐 [Click Here for Live Demo on Vercel: https://water-dashboard.vercel.app](https://water-dashboard.vercel.app)
+
 **A state-of-the-art municipal hydraulic telemetry, Non-Revenue Water (NRW) reduction, and geospatial leak dispatch platform.**
 
-[🚀 Deploy to Vercel](#-deploying-to-vercel) • [✨ Key Modules](#-key-modules--capabilities) • [📐 System Architecture](#-system-architecture) • [🛠️ Local Installation](#-quickstart--local-development) • [📖 API Reference](#-api-specification)
+[🔴 Live Website](https://water-dashboard.vercel.app) • [🚀 Deploy to Vercel](#-deploying-to-vercel) • [✨ Key Modules](#-key-modules--capabilities) • [📐 System Architecture](#-system-architecture) • [🛠️ Local Installation](#-quickstart--local-development) • [📖 API Reference](#-api-specification)
 
 <br />
 

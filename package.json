@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "description": "AquaWatch - Urban Water Leakage & Loss Detection Intelligence System with GIS mapping, rolling Z-score anomaly detection, and maintenance dispatch queue.",
+  "homepage": "https://water-dashboard.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AvishkarRanjane/Water-Dashboard.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
