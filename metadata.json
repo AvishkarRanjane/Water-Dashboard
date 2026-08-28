@@ -1,0 +1,6 @@
+{
+  "name": "AquaWatch - Urban Water Leakage & Loss Detection",
+  "description": "Smart urban water leakage, non-revenue water (NRW) loss detection, GIS pipeline network monitoring, rolling z-score anomaly detection, leak priority ranking, and citizen reporting platform.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
