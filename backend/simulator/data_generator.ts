@@ -10,6 +10,10 @@ import { LossEstimationEngine } from '../core/loss_estimation';
 import { PriorityRankingEngine } from '../core/priority_ranking';
 import { DataStore } from '../db/in_memory_store';
 import { AnomalyEvent, AnomalySeverity, AnomalyType, ConsumptionRecord, MaintenanceTicket, Sensor, Zone } from '../../src/types';
+import simulatorConstants from '../../data/simulator_constants.json';
+import defaultSensitivityConfig from '../../data/default_sensitivity_config.json';
+
+const SC = simulatorConstants;
 
 export interface InjectedLeakScenario {
   zone_id: string;
@@ -34,8 +38,8 @@ export class TelemetrySimulator {
   public static seedHistoricalTelemetry() {
     const now = Date.now();
     const records: ConsumptionRecord[] = [];
-    const intervalMinutes = 15;
-    const intervals = (24 * 60) / intervalMinutes; // 96 data points
+    const intervalMinutes = SC.historical_interval_minutes; // ORIGINAL: 15
+    const intervals = (SC.historical_hours /* ORIGINAL: 24 */ * 60) / intervalMinutes; // 96 data points
 
     for (let i = intervals; i >= 0; i--) {
       const timestamp = new Date(now - i * intervalMinutes * 60 * 1000);
@@ -46,22 +50,26 @@ export class TelemetrySimulator {
         const zoneSensors = DataStore.sensors.filter(s => s.zone_id === zone.zone_id);
         
         for (const sensor of zoneSensors) {
-          const noiseFlow = (Math.random() - 0.5) * (zone.base_demand_m3_h * 0.06);
-          const noisePressure = (Math.random() - 0.5) * 0.15;
+          const noiseFlow = (Math.random() - 0.5) * (zone.base_demand_m3_h * SC.noise_flow_factor_historical /* ORIGINAL: 0.06 */);
+          const noisePressure = (Math.random() - 0.5) * SC.noise_pressure_factor_historical /* ORIGINAL: 0.15 */;
 
           let flow = (zone.base_demand_m3_h * diurnalMultiplier) + noiseFlow;
           let pressure = zone.target_pressure_bar + noisePressure;
 
           // Injected history for Central Zone (burst that started 45 mins ago)
-          if (zone.zone_id === 'zone-central' && i <= 3) {
-            flow += 78.0;
-            pressure -= 1.05;
+          // ORIGINAL: if (zone.zone_id === 'zone-central' && i <= 3) { flow += 78.0; pressure -= 1.05; }
+          const centralHistory = SC.injected_history['zone-central'];
+          if (zone.zone_id === 'zone-central' && i <= centralHistory.active_intervals) {
+            flow += centralHistory.flow_boost;
+            pressure -= centralHistory.pressure_drop;
           }
 
           // Injected history for East Zone (slow leak for past 2 hours)
-          if (zone.zone_id === 'zone-east' && i <= 8) {
-            flow += 33.5;
-            pressure -= 0.35;
+          // ORIGINAL: if (zone.zone_id === 'zone-east' && i <= 8) { flow += 33.5; pressure -= 0.35; }
+          const eastHistory = SC.injected_history['zone-east'];
+          if (zone.zone_id === 'zone-east' && i <= eastHistory.active_intervals) {
+            flow += eastHistory.flow_boost;
+            pressure -= eastHistory.pressure_drop;
           }
 
           records.push({
@@ -71,7 +79,8 @@ export class TelemetrySimulator {
             timestamp: timestamp.toISOString(),
             flow_value: Number(Math.max(1, flow).toFixed(2)),
             pressure_value: Number(Math.max(0.5, pressure).toFixed(2)),
-            raw_status: (flow > zone.base_demand_m3_h * 1.3) ? 'anomalous' : 'normal'
+            // ORIGINAL: raw_status: (flow > zone.base_demand_m3_h * 1.3) ? 'anomalous' : 'normal'
+            raw_status: (flow > zone.base_demand_m3_h * SC.anomalous_flow_threshold_multiplier) ? 'anomalous' : 'normal'
           });
         }
       }
@@ -101,11 +110,8 @@ export class TelemetrySimulator {
       const zoneSensors = DataStore.sensors.filter(s => s.zone_id === zone.zone_id);
       const config = DataStore.zoneSensitivityConfigs[zone.zone_id] || {
         zone_id: zone.zone_id,
-        z_score_threshold: 2.5,
-        rolling_window_minutes: 30,
-        min_flow_deviation_pct: 15.0,
-        night_flow_multiplier: 1.25,
-        auto_ticket_threshold: 75.0
+        /* ORIGINAL HARDCODED FALLBACK: z_score_threshold: 2.5, rolling_window_minutes: 30, min_flow_deviation_pct: 15.0, night_flow_multiplier: 1.25, auto_ticket_threshold: 75.0 */
+        ...defaultSensitivityConfig
       };
 
       // Check if this zone has an active injected leak scenario
@@ -118,26 +124,31 @@ export class TelemetrySimulator {
       }
 
       // Existing persistent anomalies
+      // ORIGINAL: if (zone.zone_id === 'zone-central') { injectedFlowBoost += 75.0; injectedPressureDrop += 1.05; }
+      const centralPersistent = SC.persistent_anomalies['zone-central'];
       if (zone.zone_id === 'zone-central') {
-        injectedFlowBoost += 75.0;
-        injectedPressureDrop += 1.05;
-      } else if (zone.zone_id === 'zone-east') {
-        injectedFlowBoost += 33.0;
-        injectedPressureDrop += 0.35;
+        injectedFlowBoost += centralPersistent.flow_boost;
+        injectedPressureDrop += centralPersistent.pressure_drop;
+      }
+      // ORIGINAL: else if (zone.zone_id === 'zone-east') { injectedFlowBoost += 33.0; injectedPressureDrop += 0.35; }
+      const eastPersistent = SC.persistent_anomalies['zone-east'];
+      if (zone.zone_id === 'zone-east') {
+        injectedFlowBoost += eastPersistent.flow_boost;
+        injectedPressureDrop += eastPersistent.pressure_drop;
       }
 
       let currentZoneFlow = 0;
       let currentZonePressure = 0;
 
       for (const sensor of zoneSensors) {
-        const noiseFlow = (Math.random() - 0.5) * (zone.base_demand_m3_h * 0.05);
-        const noisePressure = (Math.random() - 0.5) * 0.12;
+        const noiseFlow = (Math.random() - 0.5) * (zone.base_demand_m3_h * SC.noise_flow_factor_realtime /* ORIGINAL: 0.05 */);
+        const noisePressure = (Math.random() - 0.5) * SC.noise_pressure_factor_realtime /* ORIGINAL: 0.12 */;
 
         let flow = (zone.base_demand_m3_h * diurnalMultiplier) + noiseFlow + (sensor.type === 'flow' ? injectedFlowBoost : 0);
         let pressure = zone.target_pressure_bar + noisePressure - (sensor.type === 'pressure' ? injectedPressureDrop : 0);
 
-        flow = Math.max(2.0, flow);
-        pressure = Math.max(0.4, pressure);
+        flow = Math.max(SC.min_flow_floor /* ORIGINAL: 2.0 */, flow);
+        pressure = Math.max(SC.min_pressure_floor /* ORIGINAL: 0.4 */, pressure);
 
         sensor.current_reading = Number((sensor.type === 'flow' ? flow : pressure).toFixed(2));
         sensor.last_ping = timestamp;
@@ -164,12 +175,12 @@ export class TelemetrySimulator {
         };
 
         DataStore.consumptionHistory.push(record);
-        if (DataStore.consumptionHistory.length > 800) {
+        if (DataStore.consumptionHistory.length > SC.consumption_buffer_max /* ORIGINAL: 800 */) {
           DataStore.consumptionHistory.shift();
         }
 
         // Run Anomaly Detection Engine evaluation
-        const recentHistory = DataStore.consumptionHistory.filter(r => r.sensor_id === sensor.sensor_id).slice(-15);
+        const recentHistory = DataStore.consumptionHistory.filter(r => r.sensor_id === sensor.sensor_id).slice(-SC.recent_history_slice_size /* ORIGINAL: 15 */);
         const evalResult = AnomalyEngine.evaluateRecord(
           { flow_value: flow, pressure_value: pressure, timestamp },
           recentHistory,
@@ -226,7 +237,7 @@ export class TelemetrySimulator {
                 priority_score: priorityResult.priorityScore,
                 priority_breakdown: priorityResult.breakdown,
                 severity: anomaly.severity,
-                estimated_loss_m3: Number((anomaly.estimated_loss_rate_m3_h * 2.0).toFixed(1)),
+                estimated_loss_m3: Number((anomaly.estimated_loss_rate_m3_h * SC.estimated_loss_duration_hours /* ORIGINAL: 2.0 */).toFixed(1)),
                 status: 'reported',
                 assigned_to: 'Auto-Dispatch Queue (Pending Assignee)',
                 notes: `Auto-generated ticket: ${anomaly.type} flagged with Priority Score ${priorityResult.priorityScore}. Recommended SLA response within ${priorityResult.recommendedResponseTimeHours} hours.`,
@@ -265,8 +276,8 @@ export class TelemetrySimulator {
     zoneId: string,
     type: AnomalyType = 'Sudden Pipe Burst',
     severity: AnomalySeverity = 'critical',
-    flowIncrease: number = 85.0,
-    pressureDrop: number = 1.40
+    flowIncrease: number = SC.default_inject_flow_m3_h /* ORIGINAL: 85.0 */,
+    pressureDrop: number = SC.default_inject_pressure_drop_bar /* ORIGINAL: 1.40 */
   ): InjectedLeakScenario {
     const zone = DataStore.zones.find(z => z.zone_id === zoneId);
     const scenario: InjectedLeakScenario = {
@@ -316,7 +327,7 @@ export class TelemetrySimulator {
       if (this.onTelemetryTickCallback) {
         this.onTelemetryTickCallback(frame);
       }
-    }, 4000);
+    }, SC.simulation_tick_interval_ms /* ORIGINAL: 4000 */);
   }
 
   public static stopSimulationLoop() {

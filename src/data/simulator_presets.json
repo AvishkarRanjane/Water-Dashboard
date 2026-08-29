@@ -1,0 +1,29 @@
+[
+  {
+    "title": "🚨 Major Main Rupture (Central Downtown)",
+    "zone_id": "zone-central",
+    "type": "Sudden Pipe Burst",
+    "severity": "critical",
+    "flow": 92,
+    "pressure": 1.45,
+    "desc": "Severe 350mm feeder burst causing street flooding and acute pressure drop."
+  },
+  {
+    "title": "💧 Slow Creep Joint Separation (East Historic)",
+    "zone_id": "zone-east",
+    "type": "Slow Creep Leak",
+    "severity": "high",
+    "flow": 38,
+    "pressure": 0.40,
+    "desc": "Underground socket failure in 1968 pipeline. Continuous baseline loss."
+  },
+  {
+    "title": "🌙 Night Minimum Flow Surge (North Hills)",
+    "zone_id": "zone-north",
+    "type": "Night Minimum Flow Surge",
+    "severity": "medium",
+    "flow": 26,
+    "pressure": 0.25,
+    "desc": "Abnormal baseline flow spike occurring during 03:00-04:00 AM off-peak window."
+  }
+]

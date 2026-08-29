@@ -1,0 +1,29 @@
+[
+  {
+    "user_id": "usr-admin-01",
+    "name": "Sarah Chen (Chief Hydrologist)",
+    "email": "s.chen@metrowater.gov",
+    "role": "admin",
+    "zone_access": ["ALL"],
+    "department": "Operations & Hydraulic Engineering",
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    "user_id": "usr-staff-02",
+    "name": "Marcus Ramirez (Field Dispatch Lead)",
+    "email": "m.ramirez@metrowater.gov",
+    "role": "utility_staff",
+    "zone_access": ["zone-central", "zone-north", "zone-industrial"],
+    "department": "Rapid Response Maintenance",
+    "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80"
+  },
+  {
+    "user_id": "usr-viewer-03",
+    "name": "Elena Rostova (City Auditor)",
+    "email": "e.rostova@citygov.org",
+    "role": "viewer",
+    "zone_access": ["ALL"],
+    "department": "Municipal Sustainability Oversight",
+    "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80"
+  }
+]

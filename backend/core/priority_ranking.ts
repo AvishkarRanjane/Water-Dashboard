@@ -32,6 +32,9 @@
  */
 
 import { AnomalyEvent, AnomalySeverity, Zone } from '../../src/types';
+import priorityConstants from '../../data/priority_ranking_constants.json';
+
+const C = priorityConstants;
 
 export interface PriorityEvaluation {
   priorityScore: number;
@@ -47,10 +50,11 @@ export interface PriorityEvaluation {
 
 export class PriorityRankingEngine {
   // Configurable weights (sum = 1.00)
-  public static readonly WEIGHT_SEVERITY = 0.40;
-  public static readonly WEIGHT_POPULATION = 0.35;
-  public static readonly WEIGHT_LOSS_RATE = 0.25;
-  public static readonly BONUS_CITIZEN_CONFIRMED = 10.0;
+  // ORIGINAL HARDCODED: 0.40, 0.35, 0.25, 10.0
+  public static readonly WEIGHT_SEVERITY = C.weight_severity;
+  public static readonly WEIGHT_POPULATION = C.weight_population;
+  public static readonly WEIGHT_LOSS_RATE = C.weight_loss_rate;
+  public static readonly BONUS_CITIZEN_CONFIRMED = C.bonus_citizen_confirmed;
 
   public static calculatePriority(
     anomaly: AnomalyEvent,
@@ -58,32 +62,21 @@ export class PriorityRankingEngine {
     hasCitizenReport: boolean = false
   ): PriorityEvaluation {
     // 1. Calculate Severity component (0-100)
-    let s_sev = 25;
-    switch (anomaly.severity) {
-      case 'critical':
-        s_sev = 100;
-        break;
-      case 'high':
-        s_sev = 75;
-        break;
-      case 'medium':
-        s_sev = 50;
-        break;
-      case 'low':
-      default:
-        s_sev = 25;
-        break;
-    }
+    // ORIGINAL HARDCODED: critical=100, high=75, medium=50, low=25
+    const severityScores = C.severity_scores as Record<string, number>;
+    let s_sev = severityScores[anomaly.severity] ?? severityScores['low'] ?? 25;
 
     // 2. Calculate Population Affected component (0-100)
-    // Scale against benchmark metropolitan DMA of 50,000 residents
+    // Scale against benchmark metropolitan DMA
     const pop = zone.population || 15000;
-    const s_pop = Math.min(100, (pop / 45000) * 100);
+    // ORIGINAL HARDCODED: const s_pop = Math.min(100, (pop / 45000) * 100);
+    const s_pop = Math.min(100, (pop / C.population_benchmark) * 100);
 
     // 3. Calculate Water Loss Rate component (0-100)
-    // Scale against severe 60 m3/h leak
+    // Scale against severe leak benchmark
     const lossRate = anomaly.estimated_loss_rate_m3_h || 10;
-    const s_loss = Math.min(100, (lossRate / 60.0) * 100);
+    // ORIGINAL HARDCODED: const s_loss = Math.min(100, (lossRate / 60.0) * 100);
+    const s_loss = Math.min(100, (lossRate / C.loss_rate_benchmark_m3_h) * 100);
 
     // 4. Citizen verification bonus
     const b_citizen = hasCitizenReport ? this.BONUS_CITIZEN_CONFIRMED : 0;
@@ -97,21 +90,16 @@ export class PriorityRankingEngine {
     const priorityScore = Number(Math.min(100, Math.max(1, rawScore)).toFixed(1));
 
     // Determine priority band & SLA
+    // ORIGINAL HARDCODED: >= 80 -> CRITICAL/2h, >= 65 -> HIGH/6h, >= 45 -> MEDIUM/24h, else LOW/72h
     let priorityBand: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' = 'LOW';
     let recommendedResponseTimeHours = 48;
 
-    if (priorityScore >= 80) {
-      priorityBand = 'CRITICAL';
-      recommendedResponseTimeHours = 2; // Urgent emergency dispatch
-    } else if (priorityScore >= 65) {
-      priorityBand = 'HIGH';
-      recommendedResponseTimeHours = 6;
-    } else if (priorityScore >= 45) {
-      priorityBand = 'MEDIUM';
-      recommendedResponseTimeHours = 24;
-    } else {
-      priorityBand = 'LOW';
-      recommendedResponseTimeHours = 72;
+    for (const band of C.priority_bands) {
+      if (priorityScore >= band.min_score) {
+        priorityBand = band.band as 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+        recommendedResponseTimeHours = band.sla_hours;
+        break;
+      }
     }
 
     return {

@@ -1,0 +1,15 @@
+{
+  "total_daily_inflow_m3": 63200,
+  "total_billed_consumption_m3": 49422,
+  "total_unmetered_loss_m3": 13778,
+  "nrw_percentage": 21.8,
+  "nrw_previous_month": 24.2,
+  "water_saved_to_date_m3": 184500,
+  "financial_savings_usd": 304425,
+  "active_anomalies": 2,
+  "open_tickets": 4,
+  "total_zones": 5,
+  "total_sensors": 14,
+  "system_health_index": 84.5,
+  "total_daily_loss_rate_m3_h": 114.8
+}

@@ -1,0 +1,103 @@
+[
+  {
+    "zone_id": "zone-central",
+    "name": "Central Commercial & Downtown (DMA-1)",
+    "description": "High-density commercial core, high-rise buildings and transit hubs. Demanding pressure stability.",
+    "population": 48500,
+    "target_pressure_bar": 3.8,
+    "base_demand_m3_h": 185.0,
+    "risk_level": "critical",
+    "current_flow_m3_h": 242.4,
+    "current_pressure_bar": 2.75,
+    "nrw_rate_pct": 26.4,
+    "active_anomalies_count": 2,
+    "water_loss_last_24h_m3": 1378.0,
+    "boundary_coordinates": [
+      { "lat": 37.7785, "lng": -122.4215 },
+      { "lat": 37.7895, "lng": -122.4180 },
+      { "lat": 37.7940, "lng": -122.3995 },
+      { "lat": 37.7820, "lng": -122.3920 },
+      { "lat": 37.7730, "lng": -122.4080 }
+    ]
+  },
+  {
+    "zone_id": "zone-north",
+    "name": "North Hills Residential (DMA-2)",
+    "description": "Elevated topography residential community requiring booster pumping stations.",
+    "population": 32000,
+    "target_pressure_bar": 4.2,
+    "base_demand_m3_h": 110.0,
+    "risk_level": "medium",
+    "current_flow_m3_h": 122.8,
+    "current_pressure_bar": 4.05,
+    "nrw_rate_pct": 15.2,
+    "active_anomalies_count": 1,
+    "water_loss_last_24h_m3": 310.0,
+    "boundary_coordinates": [
+      { "lat": 37.7950, "lng": -122.4250 },
+      { "lat": 37.8080, "lng": -122.4200 },
+      { "lat": 37.8060, "lng": -122.4050 },
+      { "lat": 37.7940, "lng": -122.4000 }
+    ]
+  },
+  {
+    "zone_id": "zone-east",
+    "name": "East Riverside Historic Quarter (DMA-3)",
+    "description": "Historic district with aging unlined cast iron pipes installed circa 1968.",
+    "population": 26500,
+    "target_pressure_bar": 3.2,
+    "base_demand_m3_h": 95.0,
+    "risk_level": "high",
+    "current_flow_m3_h": 128.5,
+    "current_pressure_bar": 2.85,
+    "nrw_rate_pct": 28.5,
+    "active_anomalies_count": 1,
+    "water_loss_last_24h_m3": 804.0,
+    "boundary_coordinates": [
+      { "lat": 37.7680, "lng": -122.3950 },
+      { "lat": 37.7780, "lng": -122.3900 },
+      { "lat": 37.7760, "lng": -122.3810 },
+      { "lat": 37.7590, "lng": -122.3850 }
+    ]
+  },
+  {
+    "zone_id": "zone-industrial",
+    "name": "South Bay Industrial Corridor (DMA-4)",
+    "description": "Manufacturing, logistics facilities and high-volume industrial wash plants.",
+    "population": 14000,
+    "target_pressure_bar": 4.5,
+    "base_demand_m3_h": 210.0,
+    "risk_level": "low",
+    "current_flow_m3_h": 204.0,
+    "current_pressure_bar": 4.48,
+    "nrw_rate_pct": 11.4,
+    "active_anomalies_count": 0,
+    "water_loss_last_24h_m3": 160.0,
+    "boundary_coordinates": [
+      { "lat": 37.7550, "lng": -122.4150 },
+      { "lat": 37.7650, "lng": -122.4050 },
+      { "lat": 37.7560, "lng": -122.3880 },
+      { "lat": 37.7420, "lng": -122.4020 }
+    ]
+  },
+  {
+    "zone_id": "zone-west",
+    "name": "Westside Suburbs & Campus (DMA-5)",
+    "description": "Modern suburban expansion with recently replaced ductile iron and smart PRV valves.",
+    "population": 41000,
+    "target_pressure_bar": 3.4,
+    "base_demand_m3_h": 135.0,
+    "risk_level": "low",
+    "current_flow_m3_h": 134.2,
+    "current_pressure_bar": 3.42,
+    "nrw_rate_pct": 9.8,
+    "active_anomalies_count": 0,
+    "water_loss_last_24h_m3": 125.0,
+    "boundary_coordinates": [
+      { "lat": 37.7650, "lng": -122.4450 },
+      { "lat": 37.7850, "lng": -122.4400 },
+      { "lat": 37.7800, "lng": -122.4220 },
+      { "lat": 37.7600, "lng": -122.4280 }
+    ]
+  }
+]
