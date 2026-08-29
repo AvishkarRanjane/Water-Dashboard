@@ -1,0 +1,110 @@
+[
+  {
+    "sensor_id": "SEN-FL-01",
+    "zone_id": "zone-central",
+    "pipe_id": "pipe-c-101",
+    "type": "flow",
+    "location": { "lat": 37.7885, "lng": -122.4070 },
+    "status": "warning",
+    "battery_pct": 94,
+    "sampling_rate_sec": 5,
+    "current_reading": 242.4,
+    "unit": "m³/h"
+  },
+  {
+    "sensor_id": "SEN-PR-02",
+    "zone_id": "zone-central",
+    "pipe_id": "pipe-c-101",
+    "type": "pressure",
+    "location": { "lat": 37.7890, "lng": -122.4055 },
+    "status": "warning",
+    "battery_pct": 91,
+    "sampling_rate_sec": 5,
+    "current_reading": 2.75,
+    "unit": "bar"
+  },
+  {
+    "sensor_id": "SEN-FL-03",
+    "zone_id": "zone-north",
+    "pipe_id": "pipe-n-201",
+    "type": "flow",
+    "location": { "lat": 37.8010, "lng": -122.4170 },
+    "status": "active",
+    "battery_pct": 98,
+    "sampling_rate_sec": 5,
+    "current_reading": 122.8,
+    "unit": "m³/h"
+  },
+  {
+    "sensor_id": "SEN-PR-04",
+    "zone_id": "zone-north",
+    "pipe_id": "pipe-n-201",
+    "type": "pressure",
+    "location": { "lat": 37.8040, "lng": -122.4150 },
+    "status": "active",
+    "battery_pct": 88,
+    "sampling_rate_sec": 5,
+    "current_reading": 4.05,
+    "unit": "bar"
+  },
+  {
+    "sensor_id": "SEN-FL-05",
+    "zone_id": "zone-east",
+    "pipe_id": "pipe-e-301",
+    "type": "flow",
+    "location": { "lat": 37.7690, "lng": -122.3890 },
+    "status": "warning",
+    "battery_pct": 82,
+    "sampling_rate_sec": 5,
+    "current_reading": 128.5,
+    "unit": "m³/h"
+  },
+  {
+    "sensor_id": "SEN-PR-06",
+    "zone_id": "zone-east",
+    "pipe_id": "pipe-e-301",
+    "type": "pressure",
+    "location": { "lat": 37.7660, "lng": -122.3855 },
+    "status": "warning",
+    "battery_pct": 76,
+    "sampling_rate_sec": 5,
+    "current_reading": 2.85,
+    "unit": "bar"
+  },
+  {
+    "sensor_id": "SEN-FL-07",
+    "zone_id": "zone-industrial",
+    "pipe_id": "pipe-i-401",
+    "type": "flow",
+    "location": { "lat": 37.7530, "lng": -122.4010 },
+    "status": "active",
+    "battery_pct": 99,
+    "sampling_rate_sec": 5,
+    "current_reading": 204.0,
+    "unit": "m³/h"
+  },
+  {
+    "sensor_id": "SEN-PR-08",
+    "zone_id": "zone-industrial",
+    "pipe_id": "pipe-i-401",
+    "type": "pressure",
+    "location": { "lat": 37.7490, "lng": -122.3960 },
+    "status": "active",
+    "battery_pct": 95,
+    "sampling_rate_sec": 5,
+    "current_reading": 4.48,
+    "unit": "bar"
+  },
+  {
+    "sensor_id": "SEN-FL-09",
+    "zone_id": "zone-west",
+    "pipe_id": "pipe-w-501",
+    "type": "flow",
+    "location": { "lat": 37.7740, "lng": -122.4330 },
+    "status": "active",
+    "battery_pct": 96,
+    "sampling_rate_sec": 5,
+    "current_reading": 134.2,
+    "unit": "m³/h"
+  }
+]

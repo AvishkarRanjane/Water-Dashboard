@@ -8,6 +8,7 @@ import { WebSocketManager } from '../core/websocket_manager';
 import { DataStore } from '../db/in_memory_store';
 import { TelemetrySimulator } from '../simulator/data_generator';
 import { ConsumptionRecord } from '../../src/types';
+import defaultSensitivityConfig from '../../data/default_sensitivity_config.json';
 
 const router = Router();
 
@@ -47,13 +48,10 @@ router.post('/telemetry', (req, res) => {
   DataStore.consumptionHistory.push(record);
 
   // Evaluate for anomaly
+  /* ORIGINAL HARDCODED FALLBACK: { z_score_threshold: 2.5, rolling_window_minutes: 30, min_flow_deviation_pct: 15.0, night_flow_multiplier: 1.25, auto_ticket_threshold: 75.0 } */
   const config = DataStore.zoneSensitivityConfigs[zone.zone_id] || {
     zone_id: zone.zone_id,
-    z_score_threshold: 2.5,
-    rolling_window_minutes: 30,
-    min_flow_deviation_pct: 15.0,
-    night_flow_multiplier: 1.25,
-    auto_ticket_threshold: 75.0
+    ...defaultSensitivityConfig
   };
 
   const recentHistory = DataStore.consumptionHistory.filter(r => r.sensor_id === sensor_id).slice(-15);

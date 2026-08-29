@@ -1,0 +1,6 @@
+[
+  { "max_year": 1980, "color": "#ef4444", "label": "Pre-1980 (>45 yrs)", "tag": "Critical Vintage" },
+  { "max_year": 2000, "color": "#f97316", "label": "1980 - 1999 (25-45 yrs)", "tag": "Aged Metal" },
+  { "max_year": 2015, "color": "#eab308", "label": "2000 - 2014 (10-25 yrs)", "tag": "Transitional" },
+  { "max_year": 9999, "color": "#10b981", "label": "2015 - Present (<10 yrs)", "tag": "Modern Asset" }
+]

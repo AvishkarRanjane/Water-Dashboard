@@ -1,0 +1,42 @@
+{
+  "zone-central": {
+    "zone_id": "zone-central",
+    "z_score_threshold": 2.3,
+    "rolling_window_minutes": 30,
+    "min_flow_deviation_pct": 12.0,
+    "night_flow_multiplier": 1.30,
+    "auto_ticket_threshold": 70.0
+  },
+  "zone-north": {
+    "zone_id": "zone-north",
+    "z_score_threshold": 2.5,
+    "rolling_window_minutes": 30,
+    "min_flow_deviation_pct": 15.0,
+    "night_flow_multiplier": 1.25,
+    "auto_ticket_threshold": 75.0
+  },
+  "zone-east": {
+    "zone_id": "zone-east",
+    "z_score_threshold": 2.2,
+    "rolling_window_minutes": 30,
+    "min_flow_deviation_pct": 10.0,
+    "night_flow_multiplier": 1.35,
+    "auto_ticket_threshold": 65.0
+  },
+  "zone-industrial": {
+    "zone_id": "zone-industrial",
+    "z_score_threshold": 3.0,
+    "rolling_window_minutes": 45,
+    "min_flow_deviation_pct": 20.0,
+    "night_flow_multiplier": 1.15,
+    "auto_ticket_threshold": 80.0
+  },
+  "zone-west": {
+    "zone_id": "zone-west",
+    "z_score_threshold": 2.6,
+    "rolling_window_minutes": 30,
+    "min_flow_deviation_pct": 15.0,
+    "night_flow_multiplier": 1.25,
+    "auto_ticket_threshold": 75.0
+  }
+}

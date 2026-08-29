@@ -1,0 +1,20 @@
+{
+  "weight_severity": 0.40,
+  "weight_population": 0.35,
+  "weight_loss_rate": 0.25,
+  "bonus_citizen_confirmed": 10.0,
+  "severity_scores": {
+    "critical": 100,
+    "high": 75,
+    "medium": 50,
+    "low": 25
+  },
+  "population_benchmark": 45000,
+  "loss_rate_benchmark_m3_h": 60.0,
+  "priority_bands": [
+    { "min_score": 80, "band": "CRITICAL", "sla_hours": 2 },
+    { "min_score": 65, "band": "HIGH", "sla_hours": 6 },
+    { "min_score": 45, "band": "MEDIUM", "sla_hours": 24 },
+    { "min_score": 0, "band": "LOW", "sla_hours": 72 }
+  ]
+}

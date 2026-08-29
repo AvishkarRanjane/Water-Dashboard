@@ -12,6 +12,9 @@
  */
 
 import { AnomalyEvent, Zone } from '../../src/types';
+import lossConstants from '../../data/loss_estimation_constants.json';
+
+const C = lossConstants;
 
 export interface AreaLossSummary {
   zone_id: string;
@@ -26,7 +29,8 @@ export interface AreaLossSummary {
 
 export class LossEstimationEngine {
   // Municipal treated water production & pumping cost constant ($ per m3)
-  public static readonly WATER_COST_PER_M3_USD = 1.65;
+  // ORIGINAL HARDCODED: public static readonly WATER_COST_PER_M3_USD = 1.65;
+  public static readonly WATER_COST_PER_M3_USD = C.water_cost_per_m3_usd;
 
   /**
    * Estimates cumulative loss for an active anomaly event over its active duration
@@ -38,7 +42,8 @@ export class LossEstimationEngine {
   ): { volumeLostM3: number; financialCostUsd: number } {
     // Torricelli orifice hydraulic pressure correction factor: flow through crack varies with sqrt(P)
     // Standard baseline is 3.0 bar
-    const pressureFactor = Math.sqrt(Math.max(1.0, zonePressureBar) / 3.0);
+    // ORIGINAL HARDCODED: const pressureFactor = Math.sqrt(Math.max(1.0, zonePressureBar) / 3.0);
+    const pressureFactor = Math.sqrt(Math.max(C.min_pressure_floor_bar, zonePressureBar) / C.baseline_pressure_bar);
     const volumeLostM3 = Number((anomaly.estimated_loss_rate_m3_h * durationHours * pressureFactor).toFixed(2));
     const financialCostUsd = Number((volumeLostM3 * this.WATER_COST_PER_M3_USD).toFixed(2));
 
@@ -54,7 +59,7 @@ export class LossEstimationEngine {
   public static computeZoneLossSummary(
     zone: Zone,
     activeAnomalies: AnomalyEvent[],
-    pipeLengthKm: number = 18.5
+    pipeLengthKm: number = C.default_pipe_length_km /* ORIGINAL: 18.5 */
   ): AreaLossSummary {
     const zoneAnomalies = activeAnomalies.filter(a => a.zone_id === zone.zone_id && a.status !== 'resolved');
     
@@ -64,7 +69,8 @@ export class LossEstimationEngine {
     // Total daily estimated lost volume = active leak rate * 24h + background baseline unmetered leakage (3%)
     const baselineDailySupply = zone.base_demand_m3_h * 24;
     const activeLeakageDaily = currentLeakRateM3h * 24;
-    const backgroundUnavoidableLoss = baselineDailySupply * 0.04; // 4% unavoidable background loss
+    // ORIGINAL HARDCODED: const backgroundUnavoidableLoss = baselineDailySupply * 0.04;
+    const backgroundUnavoidableLoss = baselineDailySupply * C.background_unavoidable_loss_pct; // 4% unavoidable background loss
     
     const totalDailyLossM3 = Number((activeLeakageDaily + backgroundUnavoidableLoss).toFixed(1));
     const financialLoss24h = Number((totalDailyLossM3 * this.WATER_COST_PER_M3_USD).toFixed(2));
@@ -76,9 +82,10 @@ export class LossEstimationEngine {
     const lossIntensity = pipeLengthKm > 0 ? Number((totalDailyLossM3 / pipeLengthKm).toFixed(2)) : 0;
 
     let status: 'critical' | 'elevated' | 'optimal' = 'optimal';
-    if (nrwRatePct > 25 || zoneAnomalies.some(a => a.severity === 'critical')) {
+    // ORIGINAL HARDCODED: if (nrwRatePct > 25 ...) ... else if (nrwRatePct > 16 ...)
+    if (nrwRatePct > C.nrw_critical_threshold_pct || zoneAnomalies.some(a => a.severity === 'critical')) {
       status = 'critical';
-    } else if (nrwRatePct > 16 || zoneAnomalies.length > 0) {
+    } else if (nrwRatePct > C.nrw_elevated_threshold_pct || zoneAnomalies.length > 0) {
       status = 'elevated';
     }
 

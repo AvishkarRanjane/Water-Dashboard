@@ -1,0 +1,98 @@
+[
+  {
+    "pipe_id": "pipe-c-101",
+    "zone_id": "zone-central",
+    "material": "Cast Iron",
+    "install_year": 1974,
+    "diameter_mm": 350,
+    "nominal_pressure_bar": 3.8,
+    "condition_score": 3.4,
+    "has_active_leak": true,
+    "leak_count_historical": 7,
+    "path_coordinates": [
+      { "lat": 37.7850, "lng": -122.4140 },
+      { "lat": 37.7885, "lng": -122.4070 },
+      { "lat": 37.7910, "lng": -122.4010 }
+    ]
+  },
+  {
+    "pipe_id": "pipe-c-102",
+    "zone_id": "zone-central",
+    "material": "Ductile Iron",
+    "install_year": 1998,
+    "diameter_mm": 250,
+    "nominal_pressure_bar": 3.8,
+    "condition_score": 6.8,
+    "has_active_leak": false,
+    "leak_count_historical": 2,
+    "path_coordinates": [
+      { "lat": 37.7810, "lng": -122.4180 },
+      { "lat": 37.7850, "lng": -122.4140 },
+      { "lat": 37.7820, "lng": -122.4040 }
+    ]
+  },
+  {
+    "pipe_id": "pipe-n-201",
+    "zone_id": "zone-north",
+    "material": "PVC",
+    "install_year": 2008,
+    "diameter_mm": 200,
+    "nominal_pressure_bar": 4.2,
+    "condition_score": 7.9,
+    "has_active_leak": false,
+    "leak_count_historical": 1,
+    "path_coordinates": [
+      { "lat": 37.7980, "lng": -122.4210 },
+      { "lat": 37.8040, "lng": -122.4150 },
+      { "lat": 37.8055, "lng": -122.4090 }
+    ]
+  },
+  {
+    "pipe_id": "pipe-e-301",
+    "zone_id": "zone-east",
+    "material": "Asbestos Cement",
+    "install_year": 1968,
+    "diameter_mm": 300,
+    "nominal_pressure_bar": 3.2,
+    "condition_score": 2.8,
+    "has_active_leak": true,
+    "leak_count_historical": 9,
+    "path_coordinates": [
+      { "lat": 37.7720, "lng": -122.3920 },
+      { "lat": 37.7680, "lng": -122.3870 },
+      { "lat": 37.7640, "lng": -122.3840 }
+    ]
+  },
+  {
+    "pipe_id": "pipe-i-401",
+    "zone_id": "zone-industrial",
+    "material": "HDPE",
+    "install_year": 2019,
+    "diameter_mm": 400,
+    "nominal_pressure_bar": 4.5,
+    "condition_score": 9.4,
+    "has_active_leak": false,
+    "leak_count_historical": 0,
+    "path_coordinates": [
+      { "lat": 37.7580, "lng": -122.4090 },
+      { "lat": 37.7520, "lng": -122.3990 },
+      { "lat": 37.7470, "lng": -122.3940 }
+    ]
+  },
+  {
+    "pipe_id": "pipe-w-501",
+    "zone_id": "zone-west",
+    "material": "Ductile Iron",
+    "install_year": 2015,
+    "diameter_mm": 250,
+    "nominal_pressure_bar": 3.4,
+    "condition_score": 8.9,
+    "has_active_leak": false,
+    "leak_count_historical": 1,
+    "path_coordinates": [
+      { "lat": 37.7710, "lng": -122.4380 },
+      { "lat": 37.7760, "lng": -122.4310 },
+      { "lat": 37.7810, "lng": -122.4260 }
+    ]
+  }
+]

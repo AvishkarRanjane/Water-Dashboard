@@ -1,0 +1,7 @@
+{
+  "Ductile Iron": { "color": "#2563eb", "label": "Ductile Iron", "bg": "bg-blue-50", "border": "border-blue-200" },
+  "Cast Iron": { "color": "#e11d48", "label": "Cast Iron (High Risk)", "bg": "bg-rose-50", "border": "border-rose-200" },
+  "PVC": { "color": "#059669", "label": "PVC (Modern Plastic)", "bg": "bg-emerald-50", "border": "border-emerald-200" },
+  "HDPE": { "color": "#7c3aed", "label": "HDPE (Flexible Poly)", "bg": "bg-purple-50", "border": "border-purple-200" },
+  "Asbestos Cement": { "color": "#d97706", "label": "Asbestos Cement", "bg": "bg-amber-50", "border": "border-amber-200" }
+}

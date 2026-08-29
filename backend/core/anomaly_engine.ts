@@ -24,6 +24,10 @@
  */
 
 import { AnomalyEvent, AnomalySeverity, AnomalyType, ConsumptionRecord, Sensor, Zone, ZoneSensitivityConfig } from '../../src/types';
+import anomalyConstants from '../../data/anomaly_engine_constants.json';
+
+const C = anomalyConstants;
+const D = C.diurnal_multipliers;
 
 export interface AnomalyDetectionResult {
   isAnomaly: boolean;
@@ -57,24 +61,24 @@ export class AnomalyEngine {
     const expectedPressureBase = zone.target_pressure_bar;
 
     let meanFlow = expectedFlowBase;
-    let stdFlow = expectedFlowBase * 0.08; // 8% normal variance
+    let stdFlow = expectedFlowBase * C.normal_flow_variance_pct; // ORIGINAL: 0.08 (8% normal variance)
     let meanPressure = expectedPressureBase;
-    let stdPressure = 0.25; // 0.25 bar normal variance
+    let stdPressure = C.normal_pressure_variance_bar; // ORIGINAL: 0.25 (0.25 bar normal variance)
 
-    if (recentHistory.length >= 5) {
+    if (recentHistory.length >= C.min_history_samples /* ORIGINAL: 5 */) {
       const flows = recentHistory.map(r => r.flow_value).filter(v => v > 0);
       const pressures = recentHistory.map(r => r.pressure_value).filter(v => v > 0);
       
-      if (flows.length >= 5) {
+      if (flows.length >= C.min_history_samples /* ORIGINAL: 5 */) {
         meanFlow = flows.reduce((a, b) => a + b, 0) / flows.length;
         const varianceFlow = flows.reduce((sum, v) => sum + Math.pow(v - meanFlow, 2), 0) / flows.length;
-        stdFlow = Math.max(Math.sqrt(varianceFlow), 2.0); // minimum standard deviation floor
+        stdFlow = Math.max(Math.sqrt(varianceFlow), C.min_std_flow_floor /* ORIGINAL: 2.0 */); // minimum standard deviation floor
       }
 
-      if (pressures.length >= 5) {
+      if (pressures.length >= C.min_history_samples /* ORIGINAL: 5 */) {
         meanPressure = pressures.reduce((a, b) => a + b, 0) / pressures.length;
         const variancePressure = pressures.reduce((sum, v) => sum + Math.pow(v - meanPressure, 2), 0) / pressures.length;
-        stdPressure = Math.max(Math.sqrt(variancePressure), 0.1);
+        stdPressure = Math.max(Math.sqrt(variancePressure), C.min_std_pressure_floor /* ORIGINAL: 0.1 */);
       }
     }
 
@@ -84,7 +88,7 @@ export class AnomalyEngine {
     const deviationPct = ((record.flow_value - meanFlow) / meanFlow) * 100;
 
     // Apply night flow penalty multiplier if night hours (2 AM - 5 AM)
-    const isNightHours = hour >= 2 && hour <= 5;
+    const isNightHours = hour >= C.night_hours_start /* ORIGINAL: 2 */ && hour <= C.night_hours_end /* ORIGINAL: 5 */;
     const threshold = isNightHours 
       ? config.z_score_threshold / config.night_flow_multiplier 
       : config.z_score_threshold;
@@ -95,31 +99,31 @@ export class AnomalyEngine {
     let anomalyType: AnomalyType = 'Slow Creep Leak';
 
     // Condition A: Sudden Pipe Burst (High Flow Surge + Pressure Drop)
-    if (zScoreFlow >= threshold && zScorePressure <= -1.5 && deviationPct >= config.min_flow_deviation_pct) {
+    if (zScoreFlow >= threshold && zScorePressure <= C.burst_pressure_z_threshold /* ORIGINAL: -1.5 */ && deviationPct >= config.min_flow_deviation_pct) {
       isAnomaly = true;
       anomalyType = 'Sudden Pipe Burst';
-      severity = zScoreFlow > 4.0 || deviationPct > 50 ? 'critical' : 'high';
+      severity = zScoreFlow > C.burst_critical_z /* ORIGINAL: 4.0 */ || deviationPct > C.burst_critical_deviation_pct /* ORIGINAL: 50 */ ? 'critical' : 'high';
     }
     // Condition B: Night Minimum Flow Surge (Classic indicator of underground leaks)
     else if (isNightHours && zScoreFlow >= threshold && deviationPct >= config.min_flow_deviation_pct) {
       isAnomaly = true;
       anomalyType = 'Night Minimum Flow Surge';
-      severity = deviationPct > 35 ? 'high' : 'medium';
+      severity = deviationPct > C.night_high_deviation_pct /* ORIGINAL: 35 */ ? 'high' : 'medium';
     }
     // Condition C: Sustained Pressure Drop (Main transmission line rupture or valve failure)
-    else if (zScorePressure <= -2.5 && record.flow_value >= meanFlow * 0.9) {
+    else if (zScorePressure <= C.sustained_pressure_drop_z /* ORIGINAL: -2.5 */ && record.flow_value >= meanFlow * 0.9) {
       isAnomaly = true;
       anomalyType = 'Pressure Drop Anomaly';
-      severity = zScorePressure < -3.5 ? 'critical' : 'high';
+      severity = zScorePressure < C.sustained_pressure_critical_z /* ORIGINAL: -3.5 */ ? 'critical' : 'high';
     }
     // Condition D: Slow Creep Leak / Aging Pipe Loss (Moderate sustained elevation)
     else if (zScoreFlow >= threshold && deviationPct >= config.min_flow_deviation_pct) {
       isAnomaly = true;
       anomalyType = 'Slow Creep Leak';
-      severity = deviationPct > 30 ? 'high' : 'medium';
+      severity = deviationPct > C.creep_high_deviation_pct /* ORIGINAL: 30 */ ? 'high' : 'medium';
     }
     // Condition E: Unauthorized Draw / Meter Bypass (Localized spike without pressure drop)
-    else if (zScoreFlow >= 3.5 && zScorePressure >= -0.5) {
+    else if (zScoreFlow >= C.unauthorized_draw_flow_z /* ORIGINAL: 3.5 */ && zScorePressure >= C.unauthorized_draw_pressure_z /* ORIGINAL: -0.5 */) {
       isAnomaly = true;
       anomalyType = 'Unauthorized Draw / Meter Bypass';
       severity = 'medium';
@@ -179,16 +183,22 @@ export class AnomalyEngine {
    */
   public static getDiurnalMultiplier(hour: number): number {
     // 0:00 - 4:00 (Night Minimum Flow ~ 0.4x - 0.35x nominal)
-    if (hour >= 0 && hour <= 4) return 0.35 + (hour * 0.02);
+    // ORIGINAL: if (hour >= 0 && hour <= 4) return 0.35 + (hour * 0.02);
+    if (hour >= 0 && hour <= 4) return D.night_base + (hour * D.night_increment);
     // 5:00 - 6:00 (Morning Ramp Up ~ 0.6x - 0.9x)
-    if (hour >= 5 && hour <= 6) return 0.65 + ((hour - 5) * 0.25);
+    // ORIGINAL: if (hour >= 5 && hour <= 6) return 0.65 + ((hour - 5) * 0.25);
+    if (hour >= 5 && hour <= 6) return D.morning_ramp_base + ((hour - 5) * D.morning_ramp_increment);
     // 7:00 - 9:00 (Morning Peak Demand ~ 1.45x - 1.6x)
-    if (hour >= 7 && hour <= 9) return 1.45 + (Math.sin((hour - 7) * 0.8) * 0.15);
+    // ORIGINAL: if (hour >= 7 && hour <= 9) return 1.45 + (Math.sin((hour - 7) * 0.8) * 0.15);
+    if (hour >= 7 && hour <= 9) return D.morning_peak_base + (Math.sin((hour - 7) * D.morning_peak_sin_frequency) * D.morning_peak_sin_amplitude);
     // 10:00 - 16:00 (Mid-day steady ~ 1.0x - 1.1x)
-    if (hour >= 10 && hour <= 16) return 1.05 + (Math.sin((hour - 10) * 0.5) * 0.08);
+    // ORIGINAL: if (hour >= 10 && hour <= 16) return 1.05 + (Math.sin((hour - 10) * 0.5) * 0.08);
+    if (hour >= 10 && hour <= 16) return D.midday_base + (Math.sin((hour - 10) * D.midday_sin_frequency) * D.midday_sin_amplitude);
     // 17:00 - 21:00 (Evening Peak ~ 1.35x - 1.5x)
-    if (hour >= 17 && hour <= 21) return 1.35 + (Math.sin((hour - 17) * 0.6) * 0.15);
+    // ORIGINAL: if (hour >= 17 && hour <= 21) return 1.35 + (Math.sin((hour - 17) * 0.6) * 0.15);
+    if (hour >= 17 && hour <= 21) return D.evening_peak_base + (Math.sin((hour - 17) * D.evening_peak_sin_frequency) * D.evening_peak_sin_amplitude);
     // 22:00 - 23:00 (Night settling ~ 0.8x - 0.5x)
-    return 0.75 - ((hour - 22) * 0.25);
+    // ORIGINAL: return 0.75 - ((hour - 22) * 0.25);
+    return D.night_settle_base - ((hour - 22) * D.night_settle_decrement);
   }
 }

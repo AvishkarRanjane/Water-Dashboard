@@ -1,0 +1,7 @@
+{
+  "z_score_threshold": 2.5,
+  "rolling_window_minutes": 30,
+  "min_flow_deviation_pct": 15.0,
+  "night_flow_multiplier": 1.25,
+  "auto_ticket_threshold": 75.0
+}

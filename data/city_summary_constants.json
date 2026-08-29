@@ -1,0 +1,12 @@
+{
+  "total_pipe_km": 94.6,
+  "nrw_previous_month": 24.2,
+  "water_saved_base_m3": 48290.0,
+  "water_saved_per_fixed_ticket_m3": 450,
+  "water_cost_per_m3_usd": 1.65,
+  "anomaly_health_weight": 12,
+  "nrw_health_weight": 0.8,
+  "health_index_min": 20,
+  "health_index_max": 98,
+  "health_index_base": 100
+}

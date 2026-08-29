@@ -1,0 +1,19 @@
+{
+  "ranges": [
+    { "start": 0, "end": 4, "base": 0.38, "increment": 0.02 },
+    { "start": 5, "end": 6, "base": 0.7, "increment": 0.25 },
+    { "start": 7, "end": 9, "base": 1.5, "sin_amplitude": 0.15, "sin_frequency": 0.8 },
+    { "start": 10, "end": 16, "base": 1.05 },
+    { "start": 17, "end": 21, "base": 1.4 },
+    { "start": 22, "end": 23, "base": 0.7 }
+  ],
+  "default_base_demand_fallback": 120,
+  "std_deviation_pct": 0.08,
+  "sigma_multiplier": 2.0,
+  "noise_factor": 0.05,
+  "min_lower_bound": 5,
+  "injected_anomalies": {
+    "zone-central": { "flow_boost": 78.5, "start_hour": 18 },
+    "zone-east": { "flow_boost": 33.0, "start_hour": 14 }
+  }
+}

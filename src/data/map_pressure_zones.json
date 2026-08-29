@@ -1,0 +1,23 @@
+[
+  {
+    "min_pressure": 4.0,
+    "stroke": "#0284c7",
+    "fill": "#0284c7",
+    "label": "High Pressure Zone (>4.0 bar)",
+    "badge": "bg-sky-50 text-sky-800 border-sky-300"
+  },
+  {
+    "min_pressure": 3.2,
+    "stroke": "#10b981",
+    "fill": "#10b981",
+    "label": "Nominal Pressure Zone (3.2 - 4.0 bar)",
+    "badge": "bg-emerald-50 text-emerald-800 border-emerald-300"
+  },
+  {
+    "min_pressure": 0,
+    "stroke": "#d97706",
+    "fill": "#d97706",
+    "label": "Low/Controlled Pressure Zone (<3.2 bar)",
+    "badge": "bg-amber-50 text-amber-800 border-amber-300"
+  }
+]

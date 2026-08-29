@@ -1,0 +1,47 @@
+[
+  {
+    "report_id": "REP-8492",
+    "citizen_name": "David Alvarez",
+    "citizen_phone": "+1 (415) 555-0192",
+    "zone_id": "zone-central",
+    "location": { "lat": 37.7892, "lng": -122.4068 },
+    "address": "420 Montgomery St (Near Market St intersection)",
+    "description": "Heavy stream of clear clean water gushing from under the curb and asphalt near the bus stop. Pavement is starting to buckle.",
+    "estimated_surface_flow": "Active Geyser/Rupture",
+    "photo_url": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80",
+    "status": "linked_to_ticket",
+    "linked_anomaly_id": "EVT-2026-0891",
+    "linked_ticket_id": "TCK-2026-0101",
+    "reported_at_offset_minutes": -35,
+    "cross_referenced_with_sensor": true
+  },
+  {
+    "report_id": "REP-8495",
+    "citizen_name": "Maya Lin",
+    "citizen_phone": "+1 (415) 555-0481",
+    "zone_id": "zone-north",
+    "location": { "lat": 37.8020, "lng": -122.4180 },
+    "address": "884 Lombard St & Hyde",
+    "description": "Constant wet puddle on sidewalk near hydrants for the past 2 days with no rain. Water trickling into gutter.",
+    "estimated_surface_flow": "Trickle/Slow Stream",
+    "photo_url": "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80",
+    "status": "verified",
+    "reported_at_offset_minutes": -180,
+    "cross_referenced_with_sensor": false
+  },
+  {
+    "report_id": "REP-8498",
+    "citizen_name": "Anonymous Resident",
+    "zone_id": "zone-east",
+    "location": { "lat": 37.7715, "lng": -122.3895 },
+    "address": "350 3rd St, East Riverside",
+    "description": "Low water pressure in 4th floor apartments and audible hissing noise near the utility access vault.",
+    "estimated_surface_flow": "Puddle/Damp Ground",
+    "photo_url": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&auto=format&fit=crop&q=80",
+    "status": "linked_to_ticket",
+    "linked_anomaly_id": "EVT-2026-0892",
+    "linked_ticket_id": "TCK-2026-0102",
+    "reported_at_offset_minutes": -95,
+    "cross_referenced_with_sensor": true
+  }
+]

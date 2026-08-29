@@ -1,0 +1,76 @@
+[
+  {
+    "ticket_id": "TCK-2026-0101",
+    "source": "hybrid_cross_verified",
+    "linked_anomaly_id": "EVT-2026-0891",
+    "linked_report_id": "REP-8492",
+    "zone_id": "zone-central",
+    "zone_name": "Central Commercial & Downtown (DMA-1)",
+    "pipe_id": "pipe-c-101",
+    "location": { "lat": 37.7888, "lng": -122.4069 },
+    "priority_score": 94.5,
+    "priority_breakdown": {
+      "severity_weight": 40.0,
+      "population_weight": 34.0,
+      "loss_rate_weight": 24.8,
+      "citizen_bonus": 10.0
+    },
+    "severity": "critical",
+    "estimated_loss_m3": 135.0,
+    "status": "in_progress",
+    "assigned_to": "Crew Delta-4 (Lead: Tech R. Vance)",
+    "notes": "URGENT DISPATCH: Acoustic ground microphone and isolation valve crew en route. Section isolation initiated at Valve C-101-B.",
+    "created_at_offset_minutes": -38,
+    "assigned_at_offset_minutes": -30,
+    "in_progress_at_offset_minutes": -15
+  },
+  {
+    "ticket_id": "TCK-2026-0102",
+    "source": "sensor",
+    "linked_anomaly_id": "EVT-2026-0892",
+    "linked_report_id": "REP-8498",
+    "zone_id": "zone-east",
+    "zone_name": "East Riverside Historic Quarter (DMA-3)",
+    "pipe_id": "pipe-e-301",
+    "location": { "lat": 37.7690, "lng": -122.3890 },
+    "priority_score": 72.8,
+    "priority_breakdown": {
+      "severity_weight": 30.0,
+      "population_weight": 18.5,
+      "loss_rate_weight": 14.3,
+      "citizen_bonus": 10.0
+    },
+    "severity": "high",
+    "estimated_loss_m3": 61.5,
+    "status": "assigned",
+    "assigned_to": "Crew Alpha-2 (Lead: Tech J. Morales)",
+    "notes": "Leak correlator attached. Correlation indicates leak within 14 meters of junction 301. Clamp kit prepared.",
+    "created_at_offset_minutes": -100,
+    "assigned_at_offset_minutes": -45
+  },
+  {
+    "ticket_id": "TCK-2026-0098",
+    "source": "sensor",
+    "zone_id": "zone-west",
+    "zone_name": "Westside Suburbs & Campus (DMA-5)",
+    "pipe_id": "pipe-w-501",
+    "location": { "lat": 37.7750, "lng": -122.4320 },
+    "priority_score": 48.0,
+    "priority_breakdown": {
+      "severity_weight": 20.0,
+      "population_weight": 21.0,
+      "loss_rate_weight": 7.0,
+      "citizen_bonus": 0
+    },
+    "severity": "medium",
+    "estimated_loss_m3": 28.0,
+    "status": "verified_fixed",
+    "assigned_to": "Crew Beta-1 (Lead: Tech S. Kim)",
+    "notes": "Defective packing seal replaced on 250mm gate valve. Post-repair acoustic and pressure test verified normal at 3.42 bar.",
+    "created_at_offset_hours": -24,
+    "assigned_at_offset_hours": -22,
+    "in_progress_at_offset_hours": -18,
+    "resolved_at_offset_hours": -4,
+    "resolution_summary": "Replaced failed gland flange gasket. Zero seepage confirmed on 60-min hydrostatic re-test."
+  }
+]

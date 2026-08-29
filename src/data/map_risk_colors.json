@@ -1,0 +1,6 @@
+{
+  "critical": { "fill": "#ef4444", "stroke": "#b91c1c" },
+  "high": { "fill": "#f97316", "stroke": "#c2410c" },
+  "medium": { "fill": "#eab308", "stroke": "#a16207" },
+  "low": { "fill": "#10b981", "stroke": "#059669" }
+}

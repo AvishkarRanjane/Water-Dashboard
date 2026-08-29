@@ -1,0 +1,29 @@
+{
+  "form_defaults": {
+    "address": "480 Market St, Financial District",
+    "description": "Clean water bubbling through asphalt near the crosswalk. High volume running into storm drain.",
+    "surface_flow": "Active Geyser/Rupture",
+    "lat": 37.7885,
+    "lng": -122.404,
+    "zone_id": "zone-central",
+    "photo_url": "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?w=600&auto=format&fit=crop&q=80",
+    "lookup_query": "REP-8492"
+  },
+  "sample_photos": [
+    {
+      "label": "Street Gushing Burst",
+      "url": "https://media.istockphoto.com/id/157376761/photo/close-up-of-drain-pipe-leaking-water.jpg?s=612x612&w=0&k=20&c=QD8uZtE5FPU-jyKNeNa0CvQmMM9GsqLV3YKFJGsY0nI=",
+      "flow": "Active Geyser/Rupture"
+    },
+    {
+      "label": "Curb Seepage",
+      "url": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80",
+      "flow": "Trickle/Slow Stream"
+    },
+    {
+      "label": "Sidewalk Puddle / Joint Creep",
+      "url": "https://images.unsplash.com/photo-1508873696983-2df5293cb325?w=600&auto=format&fit=crop&q=80",
+      "flow": "Puddle/Damp Ground"
+    }
+  ]
+}

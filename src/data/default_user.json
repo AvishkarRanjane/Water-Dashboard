@@ -1,0 +1,9 @@
+{
+  "user_id": "usr-sarah",
+  "name": "Sarah Chen (Admin)",
+  "email": "sarah.chen@aquawatch.city.gov",
+  "role": "admin",
+  "department": "Hydraulic Systems Operations",
+  "zone_access": ["ALL"],
+  "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80"
+}

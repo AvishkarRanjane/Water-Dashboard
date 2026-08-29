@@ -1,0 +1,9 @@
+{
+  "water_cost_per_m3_usd": 1.65,
+  "baseline_pressure_bar": 3.0,
+  "min_pressure_floor_bar": 1.0,
+  "background_unavoidable_loss_pct": 0.04,
+  "default_pipe_length_km": 18.5,
+  "nrw_critical_threshold_pct": 25,
+  "nrw_elevated_threshold_pct": 16
+}
